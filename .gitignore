@@ -39,3 +39,5 @@ coverage.xml
 *.pot
 # Sphinx documentation
 docs/_build/
+# Keys
+secrets.py
