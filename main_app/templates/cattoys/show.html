@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="card-body">
+        <h1>Cat Toy Details</h1>
+        <h2 class="card-title">Name: {{ cattoy.name }}</h2>
+        <p>Color: {{ cattoy.color }}</p>
+
+        <a class="btn btn-primary" href="{% url 'cattoys_update' cattoy.id %}">Edit</a> |
+        <a class="btn btn-danger" href="{% url 'cattoys_delete' cattoy.id %}">Delete</a>
+    </div>
+{% endblock %}
