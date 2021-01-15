@@ -10,6 +10,13 @@
     {% else %}
         <p>Age: Kitten </p>
     {% endif %}
+
+    {% for cattoy in cat.cattoys.all %}
+        <p>{{ cattoy.name }}</p>
+    {% empty %}
+        <p>Cat has no toys... Buy them some toys!</p>
+    {% endfor %}
+
     <a class="btn btn-primary" href="{% url 'cats_update' cat.id %}">Update Details</a> |
     <a class="btn btn-danger" href="{% url 'cats_delete' cat.id %}">DELETE CAT</a>
 </div>
