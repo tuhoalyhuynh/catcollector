@@ -3,7 +3,7 @@ from .models import Cat, CatToy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
@@ -40,10 +40,28 @@ def login_view(request):
         form = AuthenticationForm()
         return render(request, 'login.html', { 'form': form })
 
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/cats')
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return HttpResponseRedirect('/cats')
+        else:
+            form = UserCreationForm()
+            return render(request, 'signup.html', { 'form': form })
+    else:
+        form = UserCreationForm()
+        return render(request, 'signup.html', { 'form': form })
+
 # Cats
 def cats_index(request):
     cats = Cat.objects.all()
-    return render(request, 'cats/index.html', {'cats': cats})
+    return render(request, 'cats/index.html', { 'cats': cats })
 
 def cats_show(request, cat_id):
     cat = Cat.objects.get(id=cat_id)
